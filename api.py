@@ -17,3 +17,6 @@ app = FastAPI()
 async def predict(idx: int):
     res = best_model.predict_proba(df.values[idx].reshape(1,-1))[:,1]
     return "Rejetée" if res > seuil else 'Acceptée'
+
+if __name__ == '__main__':
+    uvicorn.run(app, host='0.0.0.0', port=os.environ["PORT"])
