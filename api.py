@@ -3,6 +3,7 @@ import pandas as pd
 import dill as pickle
 from fastapi import FastAPI
 import uvicorn
+import os
 
 best_model = pickle.load(open('./BEST_MODEL.sav', 'rb'))
 f = open("./seuil.txt","r")
