@@ -3,11 +3,14 @@ import pandas as pd
 import dill as pickle
 from fastapi import FastAPI
 import uvicorn
+import os
 
 best_model = pickle.load(open('./BEST_MODEL.sav', 'rb'))
 f = open("./seuil.txt","r")
 seuil = float(f.read())
 f.close()
+
+port = os.environ["PORT"]
 
 df = pd.read_csv('./test.csv')
 
@@ -18,5 +21,5 @@ async def predict(idx: int):
     res = best_model.predict_proba(df.values[idx].reshape(1,-1))[:,1]
     return "Rejetée" if res > seuil else 'Acceptée'
 
-#if __name__ == '__main__':
-#    uvicorn.run(app, host='0.0.0.0', port='8080')
+if __name__ == '__main__':
+    uvicorn.run(api:app, host='0.0.0.0', port=port)
