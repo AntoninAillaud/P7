@@ -5,6 +5,9 @@ from fastapi.testclient import TestClient
 from api import app
 client = TestClient(app)
 
+def test_dummy():
+    pass
+
 def test_predict_accept():
     res = client.post("/predict/10")
     assert res.status_code == 200
