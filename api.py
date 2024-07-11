@@ -5,6 +5,13 @@ from fastapi import FastAPI
 import uvicorn
 import nest_asyncio
 
+best_model = pickle.load(open('./BEST_MODEL.sav', 'rb'))
+f = open("./seuil.txt","r")
+seuil = float(f.read())
+f.close()
+
+df = pd.read_csv('./test.csv')
+
 app = FastAPI()
 
 @app.post("/predict/{idx}")
@@ -13,12 +20,5 @@ async def predict(idx: int):
     return "Rejetée" if res > seuil else 'Acceptée'
 
 if __name__ == '__main__':
-    best_model = pickle.load(open('./BEST_MODEL.sav', 'rb'))
-    f = open("./seuil.txt","r")
-    seuil = float(f.read())
-    f.close()
-
-    df = pd.read_csv('./test.csv')
-    
     nest_asyncio.apply()
     uvicorn.run(app, host='0.0.0.0', port="8000")
