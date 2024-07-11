@@ -4,9 +4,6 @@ import dill as pickle
 from fastapi import FastAPI
 import uvicorn
 import nest_asyncio
-import os
-
-port = os.environ["PORT"]
 
 best_model = pickle.load(open('./BEST_MODEL.sav', 'rb'))
 f = open("./seuil.txt","r")
@@ -28,4 +25,4 @@ async def predict(idx: int):
 
 if __name__ == '__main__':
     nest_asyncio.apply()
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
+    uvicorn.run("main:app", host="0.0.0.0", port="8000", reload=False)
