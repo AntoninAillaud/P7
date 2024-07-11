@@ -14,10 +14,6 @@ df = pd.read_csv('./test.csv')
 
 app = FastAPI()
 
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
-
 @app.post("/predict/{idx}")
 async def predict(idx: int):
     res = best_model.predict_proba(df.values[idx].reshape(1,-1))[:,1]
