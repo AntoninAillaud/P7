@@ -15,11 +15,11 @@ df = pd.read_csv('./test.csv')
 app = FastAPI()
 
 @app.get("/")
-def read_root():
+async def read_root():
     return {"Hello": "World"}
 
 @app.post("/predict/{idx}")
-def predict(idx: int):
+async def predict(idx: int):
     res = best_model.predict_proba(df.values[idx].reshape(1,-1))[:,1]
     return "Rejetée" if res > seuil else 'Acceptée'
 
